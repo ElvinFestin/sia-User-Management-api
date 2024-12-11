@@ -49,6 +49,51 @@ const userController = new UserController();
  *                 message:
  *                   type: string
  *                   example: Email already exists
+ *
+ *   get:
+ *     summary: Get all users
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Number of items per page
+ *     responses:
+ *       200:
+ *         description: List of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/UserResponse'
+ *                 pagination:
+ *                   type: object
+ *                   properties:
+ *                     total:
+ *                       type: integer
+ *                     pages:
+ *                       type: integer
+ *                     page:
+ *                       type: integer
+ *                     limit:
+ *                       type: integer
  */
 
 /**
@@ -143,10 +188,33 @@ const userController = new UserController();
  *         description: Unauthorized - Invalid or missing token
  */
 
+// User Routes:
+
+// POST /api/users
+// Creates a new user
+// Request body should contain user details (email, password, firstName, lastName)
 router.post("/api/users", authMiddleware, userController.createUser);
+
+// GET /api/users
+// Retrieves all users from the database
+// Returns array of users (passwords excluded)
 router.get("/api/users", authMiddleware, userController.getAllUsers);
+
+// GET /api/users/:id
+// Retrieves a specific user by their ID
+// :id - MongoDB ObjectId of the user
 router.get("/api/users/:id", authMiddleware, userController.getUserById);
+
+// PUT /api/users/:id
+// Updates an existing user's information
+// :id - MongoDB ObjectId of the user to update
+// Request body should contain updated user details
 router.put("/api/users/:id", authMiddleware, userController.updateUser);
+
+// DELETE /api/users/:id
+// Removes a user from the database
+// :id - MongoDB ObjectId of the user to delete
 router.delete("/api/users/:id", authMiddleware, userController.deleteUser);
 
+// Export the router for use in main application
 export default router;
