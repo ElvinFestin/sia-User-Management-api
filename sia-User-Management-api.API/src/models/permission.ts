@@ -1,22 +1,25 @@
-import mongoose, { Schema } from "mongoose";
-import { IPermission } from "../interfaces/permissionInterfaces";
+// src/models/Permissions.ts
+import mongoose, { Document, Schema } from 'mongoose';
 
-// Define the schema for the Permission model
-// Schema specifies the structure and validation rules for Permission documents in MongoDB
-export const permissionSchema = new Schema(
-  {
-    // Token ID field - primary key, must be unique, required
-    token_id: { type: String, required: true, unique: true },
-    // Manager field - Boolean value indicating if the user has manager permissions
-    manager: { type: Boolean, required: true },
-    // Casher field - Boolean value indicating if the user has casher permissions
-    casher: { type: Boolean, required: true },
-    // Guest User field - Boolean value indicating if the user is a guest
-    guess_user: { type: Boolean, required: true },
-  },
-  // Enable automatic timestamp fields (createdAt and updatedAt)
-  { timestamps: true }
+interface IPermission extends Document {
+    id: string;
+    name: string;
+    description: string;
+    action: string;
+    resource: string;
+    is_active: boolean;
+}
+
+const PermissionSchema = new Schema<IPermission>(
+    {
+        id: { type: String, required: true, unique: true },
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+        action: { type: String, required: true },
+        resource: { type: String, required: true },
+        is_active: { type: Boolean, required: true, default: true },
+    },
+    { timestamps: true }
 );
 
-// Create and export the Permission model
-export const Permission = mongoose.model<IPermission>("Permissions", permissionSchema);
+export const Permission = mongoose.model<IPermission>('Permission', PermissionSchema);

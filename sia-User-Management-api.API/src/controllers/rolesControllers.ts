@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Roles } from "../models/roles";
+import { Role } from "../models/roles";
 import { IRoles } from "../interfaces/rolesInterfaces";
 import mongoose from "mongoose";
 import { validateRoles } from "../validations/rolesValidation";
@@ -26,7 +26,7 @@ export class RolesController {
       };
 
       // Create and save the new role to the database
-      const role = new Roles(roleData);
+      const role = new Role(roleData);
       const savedRole = await role.save();
 
       // Return the newly created role with 201 Created status
@@ -41,7 +41,7 @@ export class RolesController {
   public async getAllRoles(req: Request, res: Response): Promise<void> {
     try {
       // Fetch all roles from the database
-      const roles: IRoles[] = await Roles.find();
+      const roles: IRoles[] = await Role.find();
       res.json(roles);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -53,7 +53,7 @@ export class RolesController {
   public async getRoleById(req: Request, res: Response): Promise<void> {
     try {
       // Attempt to find role by ID
-      const role: IRoles | null = await Roles.findById(req.params.id);
+      const role: IRoles | null = await Role.findById(req.params.id);
 
       // Return 404 if role doesn't exist
       if (!role) {
@@ -85,7 +85,7 @@ export class RolesController {
       const roleData: Partial<IRoles> = { ...payload };
 
       // Update the role and get the updated document
-      const role: IRoles | null = await Roles.findByIdAndUpdate(req.params.id, roleData, { new: true });
+      const role: IRoles | null = await Role.findByIdAndUpdate(req.params.id, roleData, { new: true });
 
       // Return 404 if role doesn't exist
       if (!role) {
@@ -105,7 +105,7 @@ export class RolesController {
   public async deleteRole(req: Request, res: Response): Promise<void> {
     try {
       // Attempt to find and delete the role in one operation
-      const role: IRoles | null = await Roles.findByIdAndDelete(req.params.id);
+      const role: IRoles | null = await Role.findByIdAndDelete(req.params.id);
 
       // Return 404 if role doesn't exist
       if (!role) {

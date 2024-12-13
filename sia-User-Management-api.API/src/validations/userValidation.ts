@@ -8,7 +8,10 @@ import Joi from "joi"; // Import Joi validation library
  *       type: object
  *       required:
  *         - email
- *         - password     
+ *         - password
+ *         - firstname
+ *         - lastname
+ *         - contact
  *       properties:
  *         email:
  *           type: string
@@ -20,7 +23,20 @@ import Joi from "joi"; // Import Joi validation library
  *           format: password
  *           minLength: 8
  *           description: User's password (min 8 chars, must contain uppercase, lowercase, number, special char)
- *           example: "Pass123!@#"      
+ *           example: "Pass123!@#"
+ *         firstname:
+ *           type: string
+ *           description: User's first name
+ *           example: John
+ *         lastname:
+ *           type: string
+ *           description: User's last name
+ *           example: Doe
+ *         contact:
+ *           type: string
+ *           pattern: "^\\d{10,15}$"
+ *           description: User's contact number (10 to 15 digits)
+ *           example: "1234567890"
  *     UserResponse:
  *       type: object
  *       properties:
@@ -56,17 +72,12 @@ import Joi from "joi"; // Import Joi validation library
 // Define a validation schema for user data
 const userValidationSchema = Joi.object({
   // Email validation
-  // - Must be a valid email format
-  // - Required field
   email: Joi.string().email().required().messages({
     "string.email": "Please provide a valid email address",
     "any.required": "Email is required",
   }),
 
   // Password validation
-  // - Minimum 8 characters
-  // - Must contain: uppercase, lowercase, number, special character
-  // - Required field
   password: Joi.string()
     .min(8)
     .pattern(
@@ -81,6 +92,7 @@ const userValidationSchema = Joi.object({
         "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
       "any.required": "Password is required",
     }),
+
 
 });
 

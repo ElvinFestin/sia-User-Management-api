@@ -1,65 +1,54 @@
 import express from "express";
-import { RolesController } from "../controllers/rolesControllers";
+import { UserManagementController } from "../controllers/userManagementController";
 import { authMiddleware } from "../middleware/authMiddleware";
 
 // Initialize express Router
 const router = express.Router();
-const rolesController = new RolesController();
+const userManagementController = new UserManagementController();
 
 /**
  * @swagger
  * tags:
- *   name: Roles
- *   description: Role Management endpoints
+ *   name: User
+ *   description: User endpoints
  */
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     Role:
+ *     User:
  *       type: object
  *       required:
- *         - role_id
- *         - manager
- *         - cashier
- *         - guess_user
+ *         - user_id
+ *         - first_name
+ *         - last_name
+ *         - contact
  *       properties:
- *         role_id:
- *           type: string
- *           description: Unique identifier of the role
- *         manager:
- *           type: string
- *           description: Manager role description
- *         casher:
- *           type: string
- *           description: Casher role description
- *         guess_user:
- *           type: string
- *           description: Guest user role description
- *     RoleResponse:
+ *        
+ *     UserResponse:
  *       type: object
  *       properties:
- *         role_id:
+ *         user_id:
  *           type: string
- *           description: Unique identifier of the role
- *         manager:
+ *           description: Unique identifier of the user
+ *         first_name:
  *           type: string
- *           description: Manager role description
- *         casher:
+ *           description: First name of the user
+ *         last_name:
  *           type: string
- *           description: Casher role description
- *         guess_user:
+ *           description: Last name of the user
+ *         contact:
  *           type: string
- *           description: Guest user role description
+ *           description: Contact information of the user
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Timestamp when the role was created
+ *           description: Timestamp when the user was created
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Timestamp when the role was last updated
+ *           description: Timestamp when the user was last updated
  *     ValidationError:
  *       type: object
  *       properties:
@@ -81,23 +70,23 @@ const rolesController = new RolesController();
 
 /**
  * @swagger
- * /api/roles:
+ * /api/users:
  *   post:
- *     summary: Add a new role
- *     tags: [Roles]
+ *     summary: Add a new user
+ *     tags: [User]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Role'
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       201:
- *         description: Role created successfully
+ *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RoleResponse'
+ *               $ref: '#/components/schemas/UserResponse'
  *       400:
  *         description: Validation error
  *         content:
@@ -106,95 +95,95 @@ const rolesController = new RolesController();
  *               $ref: '#/components/schemas/ValidationError'
  *
  *   get:
- *     summary: Get all roles
- *     tags: [Roles]
+ *     summary: Get all users
+ *     tags: [User]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of roles
+ *         description: List of users
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/RoleResponse'
+ *                 $ref: '#/components/schemas/UserResponse'
  *
- * /api/roles/{role_id}:
+ * /api/users/{user_id}:
  *   get:
- *     summary: Get role by ID
- *     tags: [Roles]
+ *     summary: Get user by ID
+ *     tags: [User]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: role_id
+ *         name: user_id
  *         required: true
  *         schema:
  *           type: string
- *         description: Role ID
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Role details
+ *         description: User details
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RoleResponse'
+ *               $ref: '#/components/schemas/UserResponse'
  *       404:
- *         description: Role not found
+ *         description: User not found
  *
  *   put:
- *     summary: Update role details
- *     tags: [Roles]
+ *     summary: Update user details
+ *     tags: [User]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: role_id
+ *         name: user_id
  *         required: true
  *         schema:
  *           type: string
- *         description: Role ID
+ *         description: User ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Role'
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: Role updated successfully
+ *         description: User updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/RoleResponse'
+ *               $ref: '#/components/schemas/UserResponse'
  *       404:
- *         description: Role not found
+ *         description: User not found
  *
  *   delete:
- *     summary: Delete role
- *     tags: [Roles]
+ *     summary: Delete user
+ *     tags: [User]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: role_id
+ *         name: user_id
  *         required: true
  *         schema:
  *           type: string
- *         description: Role ID
+ *         description: User ID
  *     responses:
  *       204:
- *         description: Role deleted successfully
+ *         description: User deleted successfully
  *       404:
- *         description: Role not found
+ *         description: User not found
  */
 
 // Define Routes
-router.post("/api/roles", authMiddleware, rolesController.createRole);
-router.get("/api/roles", authMiddleware, rolesController.getAllRoles);
-router.get("/api/roles/:role_id", authMiddleware, rolesController.getRoleById);
-router.put("/api/roles/:role_id", authMiddleware, rolesController.updateRole);
-router.delete("/api/roles/:role_id", authMiddleware, rolesController.deleteRole);
+router.post("/api/users", authMiddleware, userManagementController.createUser);
+router.get("/api/users", authMiddleware, userManagementController.getAllUsers);
+router.get("/api/users/:user_id", authMiddleware, userManagementController.getUserById);
+router.put("/api/users/:user_id", authMiddleware, userManagementController.updateUser);
+router.delete("/api/users/:user_id", authMiddleware, userManagementController.deleteUser);
 
 export default router;

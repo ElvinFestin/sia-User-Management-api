@@ -3,9 +3,7 @@
 export interface IRoles extends Document {
     role_id: string;
     manager: boolean;
-    casher: boolean;
+    cashier: boolean;
     guess_user: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
   }
   

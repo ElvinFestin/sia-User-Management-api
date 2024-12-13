@@ -2,12 +2,16 @@ import { Document } from "mongoose";
 
 // Define the Permission interface
 export interface IPermission extends Document {
-  // Unique token ID for identifying the permission
-  token_id: string;
-  // Boolean indicating if the user has manager permissions
-  manager: boolean;
-  // Boolean indicating if the user has casher permissions
-  casher: boolean;
-  // Boolean indicating if the user is a guest
-  guess_user: boolean;
+  // Unique identifier for the permission
+  id: string;
+  // Name of the permission
+  name: string;
+  // Description of the permission
+  description: string;
+  // Action associated with the permission (e.g., read, write, delete)
+  action: string;
+  // Resource associated with the permission (e.g., user, order)
+  resource: string;
+  // Boolean indicating if the permission is active
+  is_active: boolean;
 }

@@ -13,7 +13,7 @@ import "./config/logging";
 import { DEVELOPMENT, mongo, server } from "./config/config";
 import permissionRoutes from "./routes/permissionRoutes";
 import rolesRoutes from "./routes/rolesRoutes";
-import userRoutes from "./routes/userRoutes";
+import userRoutes from "./routes/userManagementRoutes";
 import authRoutes from "./routes/authRoutes";
 
 

@@ -22,7 +22,7 @@ const rolesValidationSchema = Joi.object({
   // Casher validation
   // - Must be a boolean (true/false)
   // - Required field
-  casher: Joi.boolean().required().messages({
+  cashier: Joi.boolean().required().messages({
     "any.required": "Casher status is required",
     "boolean.base": "Casher must be a boolean value",
   }),
