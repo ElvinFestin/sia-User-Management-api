@@ -31,9 +31,9 @@ const rolesController = new RolesController();
  *         manager:
  *           type: string
  *           description: Manager role description
- *         casher:
+ *         cashier:
  *           type: string
- *           description: Casher role description
+ *           description: Cashier role description
  *         guess_user:
  *           type: string
  *           description: Guest user role description
@@ -46,7 +46,7 @@ const rolesController = new RolesController();
  *         manager:
  *           type: string
  *           description: Manager role description
- *         casher:
+ *         cashier:
  *           type: string
  *           description: Casher role description
  *         guess_user:
