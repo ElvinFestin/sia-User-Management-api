@@ -2,7 +2,7 @@
   "name": "sia-user-management-api.api",
   "version": "1.0.0",
   "description": "This repository contains WEB API for for User Management.",
-  "main": "src/server.ts",
+  "main": "node -r ts-node/ src/server.ts",
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts",
