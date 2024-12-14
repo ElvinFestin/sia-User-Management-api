@@ -29,13 +29,13 @@ const rolesController = new RolesController();
  *           type: string
  *           description: Unique identifier of the role
  *         manager:
- *           type: string
+ *           type: boolean
  *           description: Manager role description
  *         cashier:
- *           type: string
+ *           type: boolean
  *           description: Cashier role description
  *         guess_user:
- *           type: string
+ *           type: boolean
  *           description: Guest user role description
  *     RoleResponse:
  *       type: object
